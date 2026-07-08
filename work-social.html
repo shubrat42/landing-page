@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Social Media Posts — Shubrat Phatkure</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+
+  <script>
+    (function () {
+      var stored = localStorage.getItem('theme');
+      var theme = stored || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script>
+</head>
+<body>
+
+  <div class="theme-wipe" id="themeWipe" aria-hidden="true"></div>
+
+  <div class="custom-cursor" id="customCursor" aria-hidden="true">
+    <svg width="18" height="24" viewBox="0 0 18 24" fill="none">
+      <path d="M1.5 1 L1.5 20.5 L6.2 16.3 L9.3 23 L12.7 21.4 L9.6 14.8 L16 14.8 Z" fill="#111111" stroke="white" stroke-width="1.3" stroke-linejoin="round"/>
+    </svg>
+  </div>
+
+  <header class="site-header">
+    <nav class="navpill">
+      <div class="navpill-links navpill-links--left">
+        <a href="about.html">About</a>
+        <a href="index.html#services">Services</a>
+      </div>
+
+      <a href="index.html" class="nav-badge" aria-label="Shubrat — available for work">
+        <span class="nav-badge-ring">
+          <svg viewBox="0 0 100 100" aria-hidden="true">
+            <defs>
+              <path id="navBadgePath" d="M 50,50 m -37,0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0"/>
+            </defs>
+            <text font-size="10.5" letter-spacing="1.5">
+              <textPath href="#navBadgePath" startOffset="0">AVAILABLE FOR WORK • AVAILABLE FOR WORK • </textPath>
+            </text>
+          </svg>
+        </span>
+        <span class="nav-badge-core">S</span>
+      </a>
+
+      <div class="navpill-links navpill-links--right">
+        <a href="index.html#work">Work</a>
+        <a href="index.html#contact">Contact</a>
+      </div>
+    </nav>
+
+    <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle color theme">
+      <svg class="theme-icon theme-icon--sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="4.5"/>
+        <path d="M12 2.5v2.5M12 19v2.5M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2.5 12H5M19 12h2.5M4.2 19.8L6 18M18 6l1.8-1.8"/>
+      </svg>
+      <svg class="theme-icon theme-icon--moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.8 6.8 0 0 0 10.5 10.5z"/>
+      </svg>
+    </button>
+  </header>
+
+  <main>
+    <section class="section case-hero">
+      <div class="container">
+        <a href="index.html#work" class="case-back" data-reveal>&larr; Back to work</a>
+        <p class="badge badge--solid" data-reveal><span>/</span> Social Media Posts <span>/</span></p>
+        <h1 class="chromatic-text" data-reveal>Feed-ready visuals that keep a brand consistent.</h1>
+        <p class="lead" data-reveal>A set of post and story templates designed to hold together as a family, so every new upload still feels like the same brand.</p>
+        <div class="case-meta" data-reveal>
+          <div class="case-meta-item">
+            <span class="case-meta-label">Role</span>
+            <span class="case-meta-value">Designer</span>
+          </div>
+          <div class="case-meta-item">
+            <span class="case-meta-label">Timeline</span>
+            <span class="case-meta-value">2 weeks</span>
+          </div>
+          <div class="case-meta-item">
+            <span class="case-meta-label">Tools</span>
+            <span class="case-meta-value">Photoshop, Illustrator</span>
+          </div>
+          <div class="case-meta-item">
+            <span class="case-meta-label">Deliverables</span>
+            <span class="case-meta-value">Post &amp; story templates</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="case-step" data-reveal>
+          <div>
+            <span class="case-step-num">01 — Brief</span>
+            <h3>Understanding the brand</h3>
+            <p>Started with the brand's existing colors, tone, and past posts to figure out what was working and what felt inconsistent from post to post.</p>
+          </div>
+          <div class="case-media spotlight-border"></div>
+        </div>
+
+        <div class="case-step" data-reveal>
+          <div>
+            <span class="case-step-num">02 — Concept</span>
+            <h3>Building a flexible system</h3>
+            <p>Rather than one-off graphics, the goal was a small set of layout rules — type scale, spacing, and a color system — that could flex across announcements, quotes, and product posts.</p>
+          </div>
+          <div class="case-media spotlight-border"></div>
+        </div>
+
+        <div class="case-step" data-reveal>
+          <div>
+            <span class="case-step-num">03 — Refine &amp; Deliver</span>
+            <h3>Testing in the feed</h3>
+            <p>Mocked posts up in an actual feed grid to check they held together at a glance, then handed off editable templates ready to drop new content into.</p>
+          </div>
+          <div class="case-media spotlight-border"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <p class="eyebrow" data-reveal>Final Set</p>
+        <h2 data-reveal>The finished posts.</h2>
+        <div class="case-gallery" data-reveal>
+          <div class="case-media spotlight-border"></div>
+          <div class="case-media spotlight-border"></div>
+          <div class="case-media spotlight-border"></div>
+          <div class="case-media spotlight-border"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <a href="work-banners.html" class="case-next" data-reveal>
+          <span>
+            <span class="case-next-label">Next project</span>
+            <span class="case-next-title">Banners &amp; Cards</span>
+          </span>
+          <span class="case-next-arrow" aria-hidden="true">&rarr;</span>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>&copy; 2026 Shubrat Phatkure. All rights reserved.</p>
+      <nav class="nav">
+        <a href="index.html#services">Services</a>
+        <a href="index.html#work">Work</a>
+        <a href="index.html#contact">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

@@ -2,8 +2,10 @@
 gsap.registerPlugin(ScrollTrigger);
 
 // Scroll-reveal: every element marked data-reveal fades/slides up into view
-// the first time it enters the viewport.
+// the first time it enters the viewport. Work cards are handled separately
+// below so they can cascade in one-by-one.
 gsap.utils.toArray('[data-reveal]').forEach((el, i) => {
+  if (el.classList.contains('work-card')) return;
   gsap.to(el, {
     opacity: 1,
     y: 0,
@@ -17,6 +19,26 @@ gsap.utils.toArray('[data-reveal]').forEach((el, i) => {
     },
   });
 });
+
+// Selected Work cards: reveal one after another as the section scrolls into
+// view. The cards sit side-by-side in a grid, so a shared timeline with a
+// stagger makes them cascade in sequence (first, then second, then third)
+// instead of appearing all at once.
+const workCards = gsap.utils.toArray('.work-card');
+if (workCards.length) {
+  gsap.to(workCards, {
+    opacity: 1,
+    y: 0,
+    duration: 0.7,
+    ease: 'power3.out',
+    stagger: 0.28,
+    scrollTrigger: {
+      trigger: '.work-grid',
+      start: 'top 80%',
+      toggleActions: 'play none none none',
+    },
+  });
+}
 
 // Parallax: hero background layers move at different speeds than the
 // foreground content as the page scrolls, using each layer's data-parallax
@@ -88,10 +110,12 @@ if (window.matchMedia('(pointer: fine)').matches) {
 
 // Mouse-reactive hero mesh + spotlight.
 // Only runs on devices with a real mouse (pointer: fine) — touch devices
-// keep the static mesh.
-if (window.matchMedia('(pointer: fine)').matches) {
-  const hero = document.querySelector('.hero');
-  const mesh = document.getElementById('heroMesh');
+// keep the static mesh. Guarded on hero/mesh existing since pages other
+// than the homepage don't have a .hero section.
+const hero = document.querySelector('.hero');
+const heroMeshEl = document.getElementById('heroMesh');
+if (window.matchMedia('(pointer: fine)').matches && hero && heroMeshEl) {
+  const mesh = heroMeshEl;
 
   // Build the dot grid once. Each dot remembers its resting position
   // (in pixels, relative to the hero) so we can measure distance from
@@ -193,15 +217,93 @@ if (window.matchMedia('(pointer: fine)').matches) {
   });
 }
 
-// Theme toggle: switches between dark/light via a data-theme attribute on
-// <html>, persisted to localStorage. Initial theme is set by an inline
-// script in <head> (before paint) to avoid a flash of the wrong theme.
+// Loading screen: count 0 -> 100%, then zoom the whole panel toward the
+// viewer and fade it out to reveal the site. Scroll is locked (via the
+// is-loading class on <html>) until it finishes.
+(function initLoader() {
+  const loader = document.getElementById('loader');
+  if (!loader) {
+    document.documentElement.classList.remove('is-loading');
+    return;
+  }
+
+  const numEl = document.getElementById('loaderNum');
+  const fillEl = document.getElementById('loaderFill');
+  const duration = 2200;
+  const start = performance.now();
+
+  function tick(now) {
+    const t = Math.min((now - start) / duration, 1);
+    const eased = 1 - Math.pow(1 - t, 2); // easeOutQuad — fast start, gentle finish
+    const pct = Math.round(eased * 100);
+    numEl.textContent = pct;
+    fillEl.style.width = pct + '%';
+
+    if (t < 1) {
+      requestAnimationFrame(tick);
+    } else {
+      // Brief hold at 100%, then the zoom-reveal.
+      setTimeout(() => {
+        loader.classList.add('is-complete');
+        document.documentElement.classList.remove('is-loading');
+        if (window.ScrollTrigger) ScrollTrigger.refresh();
+        setTimeout(() => loader.classList.add('is-hidden'), 950);
+      }, 260);
+    }
+  }
+
+  requestAnimationFrame(tick);
+})();
+
+// Theme toggle with a seamless slide-wipe (~1000ms total). A full-screen
+// panel painted in the *incoming* theme's colour slides in to cover the
+// screen; the theme flips underneath at the midpoint; then the panel slides
+// off the opposite side, revealing the freshly themed page. Painting the
+// panel the destination colour is what makes the swap invisible.
 const themeToggle = document.getElementById('themeToggle');
-if (themeToggle) {
+const themeWipe = document.getElementById('themeWipe');
+
+// Background colour per theme — kept in sync with --color-bg in style.css.
+const THEME_BG = { dark: '#0a0a0a', light: '#f6f6f8' };
+let themeAnimating = false;
+
+if (themeToggle && themeWipe) {
   themeToggle.addEventListener('click', () => {
-    const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-    document.documentElement.setAttribute('data-theme', next);
-    localStorage.setItem('theme', next);
+    if (themeAnimating) return;
+    themeAnimating = true;
+
+    const current = document.documentElement.getAttribute('data-theme');
+    const next = current === 'dark' ? 'light' : 'dark';
+
+    themeWipe.style.background = THEME_BG[next];
+
+    // Light sweeps in from the left, dark from the right.
+    const fromLeft = next === 'light';
+    const offStart = fromLeft ? '-101%' : '101%';
+    const offEnd = fromLeft ? '101%' : '-101%';
+
+    // Park off-screen with no transition, then animate in on the next frame.
+    themeWipe.classList.remove('is-animating');
+    themeWipe.style.transform = 'translateX(' + offStart + ')';
+
+    requestAnimationFrame(() => {
+      themeWipe.classList.add('is-animating');
+      themeWipe.style.transform = 'translateX(0)';
+
+      // Midpoint: panel fully covers the screen — flip the theme behind it.
+      setTimeout(() => {
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+        themeWipe.style.transform = 'translateX(' + offEnd + ')';
+      }, 500);
+
+      // End: reset the panel off-screen instantly, ready for next time.
+      setTimeout(() => {
+        themeWipe.classList.remove('is-animating');
+        themeWipe.style.transform = 'translateX(-101%)';
+        themeAnimating = false;
+      }, 1000);
+    });
   });
 }
 

@@ -7,6 +7,8 @@
   --color-border: rgba(255, 255, 255, 0.1);
   --color-accent: #7c6cff;
   --header-bg: rgba(10, 10, 10, 0.7);
+  --pill-bg: rgba(22, 22, 26, 0.72);
+  --pill-border: rgba(255, 255, 255, 0.12);
 
   --font-body: 'Inter', system-ui, sans-serif;
 
@@ -29,6 +31,8 @@
   --color-border: rgba(0, 0, 0, 0.1);
   --color-accent: #5b46e8;
   --header-bg: rgba(246, 246, 248, 0.7);
+  --pill-bg: rgba(255, 255, 255, 0.75);
+  --pill-border: rgba(0, 0, 0, 0.1);
 
   color-scheme: light;
 }
@@ -118,16 +122,127 @@ p {
 
 /* Header */
 
+/* Floating pill navbar — links split around a central rotating avatar badge,
+   sitting in a rounded, blurred pill that floats over the hero. The header
+   itself is a transparent, click-through band; only the pill and toggle
+   receive pointer events. */
+
 .site-header {
-  position: sticky;
+  position: fixed;
   top: 0;
-  background: var(--header-bg);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--color-border);
-  z-index: 10;
-  transition: background-color 0.3s ease;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  display: flex;
+  justify-content: center;
+  padding: 1.1rem var(--space-md);
+  pointer-events: none;
 }
 
+.navpill {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: 0.4rem 0.9rem;
+  border-radius: 999px;
+  background: var(--pill-bg);
+  border: 1px solid var(--pill-border);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 12px 34px -14px rgba(0, 0, 0, 0.55);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.navpill-links {
+  display: flex;
+  gap: var(--space-md);
+  padding: 0 var(--space-sm);
+}
+
+.navpill-links a {
+  position: relative;
+  color: var(--color-text);
+  font-size: 0.95rem;
+  font-weight: 500;
+  opacity: 0.85;
+  transition: opacity 0.25s ease;
+}
+
+.navpill-links a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 100%;
+  height: 1.5px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s ease;
+}
+
+.navpill-links a:hover {
+  opacity: 1;
+}
+
+.navpill-links a:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* Central avatar badge with a rotating "available for work" text ring. */
+
+.nav-badge {
+  position: relative;
+  flex-shrink: 0;
+  width: 62px;
+  height: 62px;
+  display: grid;
+  place-items: center;
+}
+
+.nav-badge-ring {
+  position: absolute;
+  inset: 0;
+  color: var(--color-text);
+  animation: badge-spin 14s linear infinite;
+}
+
+.nav-badge-ring svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.nav-badge-ring text {
+  fill: currentColor;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+@keyframes badge-spin {
+  to { transform: rotate(360deg); }
+}
+
+.nav-badge-core {
+  position: relative;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--color-accent);
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 1.15rem;
+  letter-spacing: -0.02em;
+}
+
+.nav-badge:hover .nav-badge-ring {
+  animation-duration: 5s;
+}
+
+/* Theme toggle floats at the far-right of the header band. */
 .header-inner {
   display: flex;
   align-items: center;
@@ -191,24 +306,30 @@ p {
 }
 
 .theme-toggle {
+  position: absolute;
+  right: var(--space-md);
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: auto;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 38px;
-  height: 38px;
+  width: 44px;
+  height: 44px;
   padding: 0;
   border-radius: 50%;
-  border: 1px solid var(--color-border);
-  background: transparent;
+  border: 1px solid var(--pill-border);
+  background: var(--pill-bg);
+  backdrop-filter: blur(16px);
   color: var(--color-text);
   cursor: pointer;
   flex-shrink: 0;
+  box-shadow: 0 12px 34px -14px rgba(0, 0, 0, 0.55);
   transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
 }
 
 .theme-toggle:hover {
-  background: var(--color-bg-hover);
-  transform: rotate(-8deg);
+  transform: translateY(-50%) rotate(-12deg);
 }
 
 .theme-icon {
@@ -234,12 +355,31 @@ p {
 .hero {
   --hero-bg: #0a1636;
   --hero-bg-2: #12224f;
+  --hero-dot-color: rgba(255, 255, 255, 0.08);
+  --hero-mesh-dot-color: rgba(255, 255, 255, 0.35);
+  --hero-spotlight-color: rgba(255, 255, 255, 0.1);
+  --hero-muted: rgba(255, 255, 255, 0.82);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   overflow: hidden;
   background: linear-gradient(160deg, var(--hero-bg), var(--hero-bg-2));
+}
+
+[data-theme="light"] .hero {
+  --hero-bg: #e3f4ff;
+  --hero-bg-2: #b6e3ff;
+  --hero-dot-color: rgba(9, 40, 71, 0.5);
+  --hero-mesh-dot-color: rgba(9, 40, 71, 0.55);
+  --hero-spotlight-color: rgba(11, 74, 130, 0.12);
+  --hero-muted: var(--color-muted);
+}
+
+.hero .badge,
+.hero .lead,
+.hero .scroll-cue {
+  color: var(--hero-muted);
 }
 
 .hero-inner {
@@ -295,7 +435,7 @@ p {
 }
 
 .hero-bg--dots {
-  background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1.5px, transparent 1.5px);
+  background-image: radial-gradient(var(--hero-dot-color) 1.5px, transparent 1.5px);
   background-size: 28px 28px;
   background-position: 0 0;
   background-color: transparent;
@@ -316,7 +456,7 @@ p {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.35);
+  background: var(--hero-mesh-dot-color);
   transform: translate3d(0, 0, 0);
   will-change: transform, opacity;
 }
@@ -326,12 +466,82 @@ p {
   inset: 0;
   background: radial-gradient(
     circle at var(--mx, 50%) var(--my, 50%),
-    rgba(255, 255, 255, 0.1),
+    var(--hero-spotlight-color),
     transparent 14%
   );
   mix-blend-mode: screen;
   opacity: 0;
   transition: opacity 0.3s ease;
+}
+
+[data-theme="light"] .hero-mesh-spotlight {
+  mix-blend-mode: multiply;
+}
+
+/* Slanted service-name marquee, top-right of the hero only. The strip is
+   rotated and anchored to the right edge; the text scrolls right-to-left
+   while an orange<->white gradient flows across it (same idea as the
+   chromatic text, restricted to orange and white). Fades at both ends. */
+
+.hero-ticker {
+  position: absolute;
+  bottom: 230px;
+  right: -70px;
+  width: 640px;
+  z-index: 2;
+  overflow: hidden;
+  pointer-events: none;
+  transform: rotate(-32deg);
+  transform-origin: right center;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 22%, #000 78%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 22%, #000 78%, transparent);
+}
+
+.hero-ticker-track {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  white-space: nowrap;
+  will-change: transform;
+  animation: ticker-scroll 20s linear infinite;
+}
+
+@keyframes ticker-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.hero-ticker span {
+  margin-right: 3rem; /* trailing space per word — keeps the -50% loop seamless */
+  font-size: 1.9rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  background: linear-gradient(
+    90deg,
+    #ff7a1a, #ffffff, #ff9d3b, #ffffff, #ff7a1a
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: ticker-flow 4s linear infinite;
+}
+
+@keyframes ticker-flow {
+  0%   { background-position: 0% 50%; }
+  100% { background-position: -200% 50%; }
+}
+
+@media (max-width: 700px) {
+  .hero-ticker {
+    bottom: 190px;
+    right: -90px;
+    width: 460px;
+  }
+  .hero-ticker span {
+    font-size: 1.4rem;
+  }
 }
 
 .hero.is-mouse-active .hero-mesh-spotlight {
@@ -481,17 +691,163 @@ body.is-mouse-active * {
 .button--ghost {
   background: transparent;
   color: var(--color-text);
-  border: 1px solid var(--color-border);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  transition: border-color 0.35s ease, box-shadow 0.35s ease;
+}
+
+[data-theme="light"] .button--ghost {
+  border-color: rgba(0, 0, 0, 0.22);
 }
 
 .button--ghost:hover {
   color: #ffffff;
-  border-color: transparent;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 1px var(--color-accent), 0 0 18px -2px var(--color-accent);
 }
 
 .button--small {
   padding: 0.6rem 1.4rem;
   font-size: 0.85rem;
+}
+
+/* "Say hello" button — chromatic fill plus playful decorative shapes that
+   pop in around the button outline on hover. The wrapper is the positioning
+   context so shapes can sit outside the button (which clips its own
+   overflow). Shape colors adapt to the active theme. */
+
+.hello-wrap {
+  --hello-triangle: #ff9d3b; /* orange in dark theme */
+  position: relative;
+  display: inline-block;
+}
+
+[data-theme="light"] .hello-wrap {
+  --hello-triangle: #2f8fff; /* blue in light theme */
+}
+
+.hello-deco {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.4);
+  transition: opacity 0.3s ease, transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.hello-wrap:hover .hello-deco {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.hd-in {
+  display: block;
+  line-height: 0;
+}
+
+/* Floating bob — only runs while the button is hovered so the shapes are
+   still when hidden. Staggered per shape below for an organic drift. */
+.hello-wrap:hover .hd-in {
+  animation: hello-float 3s ease-in-out infinite;
+}
+
+@keyframes hello-float {
+  0%, 100% { transform: translateY(0) rotate(var(--hd-rot, 0deg)); }
+  50%      { transform: translateY(-6px) rotate(var(--hd-rot, 0deg)); }
+}
+
+/* Circle sitting on the top-left of the outline — white in dark, dark in
+   light (follows --color-text). */
+.hello-deco--circle {
+  top: -12px;
+  left: -10px;
+  transition-delay: 0.04s;
+}
+
+.hello-deco--circle .hd-in {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: var(--color-text);
+}
+
+/* Equilateral triangle at the top-right — orange in dark, blue in light. */
+.hello-deco--triangle {
+  top: -16px;
+  right: 14%;
+  transition-delay: 0.1s;
+}
+
+.hello-deco--triangle .hd-in {
+  --hd-rot: 12deg;
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 14px solid var(--hello-triangle);
+  animation-duration: 3.4s;
+  animation-delay: 0.3s;
+}
+
+/* Dollar sign floating off the left edge — money/value cue. */
+.hello-deco--dollar {
+  top: 50%;
+  left: -22px;
+  margin-top: -0.6em;
+  transition-delay: 0.14s;
+}
+
+.hello-deco--dollar .hd-in {
+  --hd-rot: -8deg;
+  font-weight: 800;
+  font-size: 1.25rem;
+  line-height: 1;
+  color: #f2b307;
+  animation-duration: 2.6s;
+  animation-delay: 0.5s;
+}
+
+/* Trending-up growth arrow at the bottom-left. */
+.hello-deco--growth {
+  bottom: -16px;
+  left: 8%;
+  color: #22c55e;
+  transition-delay: 0.2s;
+}
+
+.hello-deco--growth .hd-in {
+  animation-duration: 3.2s;
+  animation-delay: 0.15s;
+}
+
+/* Sparkle on the right edge — follows the accent color. */
+.hello-deco--sparkle {
+  top: 40%;
+  right: -20px;
+  margin-top: -8px;
+  color: var(--color-accent);
+  transition-delay: 0.24s;
+}
+
+.hello-deco--sparkle .hd-in {
+  animation-duration: 2.2s;
+  animation-delay: 0.4s;
+}
+
+/* Little cursor pointer at the bottom-right, aimed back at the button. */
+.hello-deco--cursor {
+  bottom: -16px;
+  right: -12px;
+  color: var(--color-text);
+  transition-delay: 0.28s;
+}
+
+.hello-deco--cursor .hd-in {
+  --hd-rot: -18deg;
+  animation-duration: 3.6s;
+  animation-delay: 0.6s;
+}
+
+.hello-deco--cursor svg path {
+  stroke: var(--color-bg);
 }
 
 /* Services */
@@ -646,6 +1002,28 @@ body.is-mouse-active * {
   box-shadow: 0 20px 40px -20px rgba(124, 108, 255, 0.45);
 }
 
+.work-card {
+  display: block;
+}
+
+.work-card-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-accent);
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.work-card:hover .work-card-hint {
+  opacity: 1;
+  transform: translateX(0);
+}
+
 /* Testimonials */
 
 .testimonial-grid {
@@ -766,6 +1144,65 @@ body.is-mouse-active * {
   100% { background-position: -300% 50%; }
 }
 
+/* Contact info list — email / phone / Discord rows under the "Say hello"
+   button, each with a sweep-in underline and a nudge-out arrow on hover. */
+
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  margin-top: var(--space-xl);
+  border-top: 1px solid var(--color-border);
+}
+
+.contact-info-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-md);
+  padding: var(--space-md) 0;
+  border-bottom: 1px solid var(--color-border);
+  transition: padding-left 0.3s ease;
+}
+
+a.contact-info-row:hover {
+  padding-left: var(--space-sm);
+}
+
+.contact-info-label {
+  flex-shrink: 0;
+  width: 8ch;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.contact-info-value {
+  flex: 1;
+  font-size: clamp(1.1rem, 2.4vw, 1.6rem);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.contact-info-arrow {
+  flex-shrink: 0;
+  font-size: 1.3rem;
+  color: var(--color-accent);
+  opacity: 0;
+  transform: translate(-6px, 6px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+a.contact-info-row:hover .contact-info-arrow {
+  opacity: 1;
+  transform: translate(0, 0);
+}
+
+.contact-info-row--static {
+  cursor: default;
+}
+
 /* Footer */
 
 .site-footer {
@@ -786,4 +1223,343 @@ body.is-mouse-active * {
 
 .site-footer .nav {
   margin: 0;
+}
+
+/* Loading screen */
+
+html.is-loading,
+html.is-loading body {
+  overflow: hidden;
+}
+
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-bg);
+  transition: opacity 0.5s ease;
+}
+
+/* On completion the whole inner block zooms toward the viewer and the
+   backdrop fades, revealing the site underneath. */
+.loader.is-complete {
+  opacity: 0;
+}
+
+.loader.is-hidden {
+  display: none;
+}
+
+.loader-inner {
+  width: min(440px, 78vw);
+  transition: transform 0.9s cubic-bezier(0.7, 0, 0.3, 1), opacity 0.7s ease;
+  transform-origin: center;
+}
+
+.loader.is-complete .loader-inner {
+  transform: scale(14);
+  opacity: 0;
+}
+
+.loader-percent {
+  display: flex;
+  align-items: baseline;
+  gap: 0.1em;
+  font-size: clamp(3.5rem, 12vw, 7rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: var(--color-text);
+}
+
+.loader-percent-sign {
+  font-size: 0.4em;
+  font-weight: 700;
+  color: var(--color-accent);
+}
+
+.loader-bar {
+  position: relative;
+  height: 6px;
+  margin-top: var(--space-md);
+  border-radius: 999px;
+  background: var(--color-border);
+  overflow: hidden;
+}
+
+.loader-bar-fill {
+  position: absolute;
+  inset: 0;
+  width: 0%;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    #ff3b3b, #ff9d3b, #f4ff3b, #3bff6a, #3bd4ff, #6a3bff, #ff3bd4
+  );
+  background-size: 200% 100%;
+  animation: chromatic-flow 3s linear infinite;
+  box-shadow: 0 0 18px -2px var(--color-accent);
+}
+
+.loader-caption {
+  margin-top: var(--space-sm);
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+/* Theme-change slide wipe — a full-screen panel that slides across the
+   viewport in the incoming theme's colour while the theme flips behind it,
+   so the change reads as one seamless sweep. Direction/colour are set from
+   script.js per toggle. */
+
+.theme-wipe {
+  position: fixed;
+  inset: 0;
+  z-index: 8000;
+  pointer-events: none;
+  background: var(--color-bg);
+  transform: translateX(-101%);
+  will-change: transform;
+}
+
+.theme-wipe.is-animating {
+  transition: transform 0.5s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+/* About page */
+
+.about-hero h1 {
+  max-width: 16ch;
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: minmax(240px, 340px) 1fr;
+  gap: var(--space-xl);
+  align-items: start;
+}
+
+.about-visual {
+  position: sticky;
+  top: 8rem;
+}
+
+.about-cards {
+  display: flex;
+  align-items: flex-end;
+}
+
+.about-card {
+  flex-shrink: 0;
+  border-radius: 999px 999px 28px 28px;
+}
+
+.about-card--ghost {
+  width: 96px;
+  height: 230px;
+  background: var(--color-bg-alt);
+  border: 1px solid var(--color-border);
+  margin-right: -40px;
+}
+
+.about-card--photo {
+  position: relative;
+  width: 200px;
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(200deg, var(--color-accent), #ff9d3b);
+  box-shadow: 0 30px 70px -30px rgba(124, 108, 255, 0.55);
+}
+
+.about-card-initial {
+  font-size: 4.5rem;
+  font-weight: 800;
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.about-card-caption {
+  margin-top: var(--space-sm);
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.about-copy {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  padding-top: var(--space-sm);
+}
+
+.about-lede {
+  max-width: 32ch;
+  font-size: clamp(1.2rem, 2.4vw, 1.5rem);
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.about-qa {
+  max-width: 42ch;
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--color-border);
+}
+
+.about-q {
+  margin-bottom: 0.4rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+.about-a {
+  font-size: 1.1rem;
+  line-height: 1.65;
+}
+
+@media (max-width: 780px) {
+  .about-grid {
+    grid-template-columns: 1fr;
+  }
+  .about-visual {
+    position: static;
+  }
+}
+
+/* Case study pages */
+
+.case-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: var(--space-md);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-muted);
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.case-back:hover {
+  color: var(--color-text);
+  transform: translateX(-3px);
+}
+
+.case-hero h1 {
+  max-width: 20ch;
+}
+
+.case-meta {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--space-md);
+  margin-top: var(--space-lg);
+  padding-top: var(--space-lg);
+  border-top: 1px solid var(--color-border);
+}
+
+.case-meta-label {
+  display: block;
+  margin-bottom: 0.35rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.case-meta-value {
+  font-weight: 600;
+  font-size: 1.05rem;
+}
+
+.case-step {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: var(--space-lg);
+  align-items: center;
+  padding: var(--space-lg) 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.case-step:last-child {
+  border-bottom: none;
+}
+
+.case-step-num {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+.case-media {
+  aspect-ratio: 4 / 3;
+  border-radius: 16px;
+  border: 1px solid var(--color-border);
+  background: linear-gradient(135deg, rgba(124, 108, 255, 0.25), rgba(255, 255, 255, 0.03));
+}
+
+.case-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-md);
+  margin-top: var(--space-md);
+}
+
+.case-gallery .case-media {
+  aspect-ratio: 1 / 1;
+}
+
+.case-next {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  padding: var(--space-lg) 0;
+  border-top: 1px solid var(--color-border);
+}
+
+.case-next-label {
+  display: block;
+  margin-bottom: 0.35rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.case-next-title {
+  font-size: clamp(1.5rem, 3.2vw, 2.25rem);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+}
+
+.case-next-arrow {
+  font-size: 1.8rem;
+  color: var(--color-accent);
+  transition: transform 0.3s ease;
+}
+
+.case-next:hover .case-next-arrow {
+  transform: translateX(10px);
+}
+
+@media (max-width: 760px) {
+  .case-step {
+    grid-template-columns: 1fr;
+  }
 }
