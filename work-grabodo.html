@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grabodo Case Study — Shubrat Phatkure</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+
+  <script>
+    (function () {
+      var stored = localStorage.getItem('theme');
+      var theme = stored || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script>
+</head>
+<body>
+
+  <div class="theme-wipe" id="themeWipe" aria-hidden="true"></div>
+
+  <div class="custom-cursor" id="customCursor" aria-hidden="true">
+    <svg width="18" height="24" viewBox="0 0 18 24" fill="none">
+      <path d="M1.5 1 L1.5 20.5 L6.2 16.3 L9.3 23 L12.7 21.4 L9.6 14.8 L16 14.8 Z" fill="#111111" stroke="white" stroke-width="1.3" stroke-linejoin="round"/>
+    </svg>
+  </div>
+
+  <header class="site-header">
+    <nav class="navpill">
+      <div class="navpill-links navpill-links--left">
+        <a href="about.html">About</a>
+        <a href="index.html#services">Services</a>
+      </div>
+
+      <a href="index.html" class="nav-badge" aria-label="Shubrat — available for work">
+        <span class="nav-badge-ring">
+          <svg viewBox="0 0 100 100" aria-hidden="true">
+            <defs>
+              <path id="navBadgePath" d="M 50,50 m -37,0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0"/>
+            </defs>
+            <text font-size="10.5" letter-spacing="1.5">
+              <textPath href="#navBadgePath" startOffset="0">AVAILABLE FOR WORK • AVAILABLE FOR WORK • </textPath>
+            </text>
+          </svg>
+        </span>
+        <span class="nav-badge-core">S</span>
+      </a>
+
+      <div class="navpill-links navpill-links--right">
+        <a href="index.html#work">Work</a>
+        <a href="index.html#contact">Contact</a>
+      </div>
+    </nav>
+
+    <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle color theme">
+      <svg class="theme-icon theme-icon--sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="4.5"/>
+        <path d="M12 2.5v2.5M12 19v2.5M4.2 4.2l1.8 1.8M18 18l1.8 1.8M2.5 12H5M19 12h2.5M4.2 19.8L6 18M18 6l1.8-1.8"/>
+      </svg>
+      <svg class="theme-icon theme-icon--moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.8 6.8 0 0 0 10.5 10.5z"/>
+      </svg>
+    </button>
+  </header>
+
+  <main>
+    <section class="section case-hero">
+      <div class="container">
+        <a href="index.html#work" class="case-back" data-reveal>&larr; Back to work</a>
+        <p class="badge badge--solid" data-reveal><span>/</span> Grabodo <span>/</span></p>
+        <h1 class="chromatic-text" data-reveal>Grabodo Case Study</h1>
+        <p class="lead" data-reveal>Two educational Instagram carousels for Grabodo — a UI/UX and web-development studio — one breaking down why websites lose visitors, the other showing everything the studio can build.</p>
+        <div class="case-meta" data-reveal>
+          <div class="case-meta-item">
+            <span class="case-meta-label">Client</span>
+            <span class="case-meta-value">Grabodo</span>
+          </div>
+          <div class="case-meta-item">
+            <span class="case-meta-label">Role</span>
+            <span class="case-meta-value">Social Media Designer</span>
+          </div>
+          <div class="case-meta-item">
+            <span class="case-meta-label">Deliverables</span>
+            <span class="case-meta-value">2 carousels · 12 slides</span>
+          </div>
+          <div class="case-meta-item">
+            <span class="case-meta-label">Platform</span>
+            <span class="case-meta-value">Instagram</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="case-step" data-reveal>
+          <div>
+            <span class="case-step-num">The Brief</span>
+            <h3>A couple of scroll-stopping carousels</h3>
+            <p>Grabodo, a UI/UX and web-development studio, asked for a couple of carousel posts for their Instagram. I designed two complete sets — twelve slides in total — sharing one consistent brand system: a dark grid background, bold condensed headlines, and bright-green highlight words that carry the eye through every slide.</p>
+          </div>
+          <div>
+            <span class="case-step-num">The Approach</span>
+            <h3>One system, two goals</h3>
+            <p>Both carousels use the same visual language so they read as a series, but each has its own job — the first earns attention by teaching, the second turns that attention into enquiries. The design leans on strong hierarchy and real screenshots so every claim feels shown, not just stated.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <p class="eyebrow" data-reveal>Carousel 01 — Educational</p>
+        <h2 data-reveal>Why your website loses visitors.</h2>
+        <p class="lead" data-reveal>Built around one sharp idea: a website has only a few seconds to earn attention, and its design decides whether visitors stay. Each slide unpacks a single homepage principle — fast load times, a clear headline, strong visual hierarchy, a hero section that instantly makes the pitch, and one focused call-to-action — using real "good vs. bad" website examples so the point lands fast. It closes on a lead-generating slide offering a free homepage audit. The layout practices what it preaches: heavy type and green accents guide the eye exactly where it should go.</p>
+        <div class="carousel-strip" data-reveal>
+          <img src="assets/work/grabodo/c1-1.png" alt="Grabodo carousel 1, slide 1 — Your website is losing visitors in under 7 seconds" loading="lazy">
+          <img src="assets/work/grabodo/c1-2.png" alt="Grabodo carousel 1, slide 2 — Slow load time, unclear headline, weak hierarchy" loading="lazy">
+          <img src="assets/work/grabodo/c1-3.png" alt="Grabodo carousel 1, slide 3 — Your hero section is your pitch" loading="lazy">
+          <img src="assets/work/grabodo/c1-4.png" alt="Grabodo carousel 1, slide 4 — Visual hierarchy over aesthetic" loading="lazy">
+          <img src="assets/work/grabodo/c1-5.png" alt="Grabodo carousel 1, slide 5 — One clear CTA above the fold" loading="lazy">
+          <img src="assets/work/grabodo/c1-6.png" alt="Grabodo carousel 1, slide 6 — Free homepage audit call-to-action" loading="lazy">
+        </div>
+        <p class="case-swipe-hint" data-reveal>← Scroll to swipe through all 6 slides →</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <p class="eyebrow" data-reveal>Carousel 02 — Services</p>
+        <h2 data-reveal>One studio, every service.</h2>
+        <p class="lead" data-reveal>The second set positions Grabodo as an all-in-one studio — "Stop managing 4 vendors, we do it all." It walks through their four core services — Website Development, App Development, Custom CRM Development, and UI/UX + Branding — and pairs each one with a real interface mockup, so the capability is shown rather than just claimed. It keeps the exact same dark-grid brand system as the first carousel for a consistent feel, and ends with a soft call to book a free 30-minute consultation.</p>
+        <div class="carousel-strip" data-reveal>
+          <img src="assets/work/grabodo/c2-1.png" alt="Grabodo carousel 2, slide 1 — Stop managing 4 vendors, we do it all" loading="lazy">
+          <img src="assets/work/grabodo/c2-2.png" alt="Grabodo carousel 2, slide 2 — Website Development" loading="lazy">
+          <img src="assets/work/grabodo/c2-3.png" alt="Grabodo carousel 2, slide 3 — App Development" loading="lazy">
+          <img src="assets/work/grabodo/c2-4.png" alt="Grabodo carousel 2, slide 4 — Custom CRM Development" loading="lazy">
+          <img src="assets/work/grabodo/c2-5.png" alt="Grabodo carousel 2, slide 5 — UI/UX + Branding" loading="lazy">
+          <img src="assets/work/grabodo/c2-6.png" alt="Grabodo carousel 2, slide 6 — Book a free 30-minute consultation" loading="lazy">
+        </div>
+        <p class="case-swipe-hint" data-reveal>← Scroll to swipe through all 6 slides →</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <a href="index.html#work" class="case-next" data-reveal>
+          <span>
+            <span class="case-next-label">More work</span>
+            <span class="case-next-title">See all projects</span>
+          </span>
+          <span class="case-next-arrow" aria-hidden="true">&rarr;</span>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>&copy; 2026 Shubrat Phatkure. All rights reserved.</p>
+      <nav class="nav">
+        <a href="index.html#services">Services</a>
+        <a href="index.html#work">Work</a>
+        <a href="index.html#contact">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

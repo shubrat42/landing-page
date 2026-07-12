@@ -1,16 +1,29 @@
 :root {
-  --color-bg: #0a0a0a;
-  --color-bg-alt: #111111;
-  --color-bg-hover: #161616;
-  --color-text: #f5f5f5;
-  --color-muted: #999999;
-  --color-border: rgba(255, 255, 255, 0.1);
-  --color-accent: #7c6cff;
-  --header-bg: rgba(10, 10, 10, 0.7);
-  --pill-bg: rgba(22, 22, 26, 0.72);
-  --pill-border: rgba(255, 255, 255, 0.12);
+  /* Dark theme: deep forest green (Studio Modular's accent, promoted to the
+     dark-mode background) with a soft periwinkle pop for interactive bits. */
+  --color-bg: #10231c;
+  --color-bg-alt: #17332a;
+  --color-bg-hover: #1e3f33;
+  --color-text: #fbf3e7;
+  --color-muted: #a9c2b5;
+  --color-border: rgba(251, 243, 231, 0.12);
+  --color-accent: #9cc4ff;
+  --header-bg: rgba(16, 35, 28, 0.72);
+  --pill-bg: rgba(23, 51, 42, 0.72);
+  --pill-border: rgba(251, 243, 231, 0.14);
 
-  --font-body: 'Inter', system-ui, sans-serif;
+  /* Fixed brand-block colors — same in both themes, used for the
+     color-blocked service cards. */
+  --card-blue-bg: #c3dcff;
+  --card-blue-ink: #16302a;
+  --card-coral-bg: #f1663d;
+  --card-coral-ink: #fff7f0;
+  --card-pink-bg: #f3aecb;
+  --card-pink-ink: #4a1f38;
+  --card-plum-bg: #4a1f38;
+  --card-plum-ink: #fbf3e7;
+
+  --font-body: 'Plus Jakarta Sans', system-ui, sans-serif;
 
   --space-sm: 1rem;
   --space-md: 2rem;
@@ -23,16 +36,18 @@
 }
 
 [data-theme="light"] {
-  --color-bg: #f6f6f8;
+  /* Light theme: Studio Modular's cream + forest green, with a warm coral
+     pop for interactive bits. */
+  --color-bg: #fff7f0;
   --color-bg-alt: #ffffff;
-  --color-bg-hover: #ececf1;
-  --color-text: #111111;
-  --color-muted: #5c5c66;
-  --color-border: rgba(0, 0, 0, 0.1);
-  --color-accent: #5b46e8;
-  --header-bg: rgba(246, 246, 248, 0.7);
-  --pill-bg: rgba(255, 255, 255, 0.75);
-  --pill-border: rgba(0, 0, 0, 0.1);
+  --color-bg-hover: #f3e7d8;
+  --color-text: #1e4137;
+  --color-muted: #5e7a6e;
+  --color-border: rgba(30, 65, 55, 0.14);
+  --color-accent: #e8622f;
+  --header-bg: rgba(255, 247, 240, 0.72);
+  --pill-bg: rgba(255, 255, 255, 0.72);
+  --pill-border: rgba(30, 65, 55, 0.12);
 
   color-scheme: light;
 }
@@ -51,7 +66,7 @@ body {
   font-family: var(--font-body);
   color: var(--color-text);
   background: var(--color-bg);
-  line-height: 1.6;
+  line-height: 1.85;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
   transition: background-color 0.3s ease, color 0.3s ease;
@@ -71,13 +86,12 @@ a {
 
 h1, h2, h3 {
   font-weight: 800;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
-  text-transform: uppercase;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
 }
 
 h1 {
-  font-size: clamp(2.5rem, 6vw, 4.75rem);
+  font-size: clamp(2.75rem, 7vw, 5.5rem);
   max-width: 18ch;
 }
 
@@ -348,32 +362,45 @@ p {
 
 .section {
   position: relative;
-  padding: var(--space-xl) 0;
+  padding: 3rem 0;
   border-bottom: 1px solid var(--color-border);
 }
 
 .hero {
-  --hero-bg: #0a1636;
-  --hero-bg-2: #12224f;
-  --hero-dot-color: rgba(255, 255, 255, 0.08);
-  --hero-mesh-dot-color: rgba(255, 255, 255, 0.35);
-  --hero-spotlight-color: rgba(255, 255, 255, 0.1);
-  --hero-muted: rgba(255, 255, 255, 0.82);
+  --hero-bg: #10231c;
+  --hero-bg-2: #1c3d31;
+  --hero-dot-color: rgba(251, 243, 231, 0.08);
+  --hero-mesh-dot-color: rgba(251, 243, 231, 0.35);
+  --hero-spotlight-color: rgba(156, 196, 255, 0.14);
+  --hero-muted: rgba(251, 243, 231, 0.82);
+  --hero-glass-bg: rgba(251, 243, 231, 0.06);
+  --hero-glass-border: rgba(251, 243, 231, 0.14);
+  --hero-glass-shadow: rgba(0, 0, 0, 0.45);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
+  padding-top: 8.5rem;
   overflow: hidden;
   background: linear-gradient(160deg, var(--hero-bg), var(--hero-bg-2));
 }
 
+@media (max-width: 640px) {
+  .hero {
+    padding-top: 7rem;
+  }
+}
+
 [data-theme="light"] .hero {
-  --hero-bg: #e3f4ff;
-  --hero-bg-2: #b6e3ff;
-  --hero-dot-color: rgba(9, 40, 71, 0.5);
-  --hero-mesh-dot-color: rgba(9, 40, 71, 0.55);
-  --hero-spotlight-color: rgba(11, 74, 130, 0.12);
+  --hero-bg: #fff7f0;
+  --hero-bg-2: #f3e2cd;
+  --hero-dot-color: rgba(30, 65, 55, 0.35);
+  --hero-mesh-dot-color: rgba(30, 65, 55, 0.45);
+  --hero-spotlight-color: rgba(232, 98, 47, 0.12);
   --hero-muted: var(--color-muted);
+  --hero-glass-bg: rgba(255, 255, 255, 0.55);
+  --hero-glass-border: rgba(255, 255, 255, 0.75);
+  --hero-glass-shadow: rgba(30, 65, 55, 0.12);
 }
 
 .hero .badge,
@@ -385,6 +412,33 @@ p {
 .hero-inner {
   position: relative;
   z-index: 2;
+}
+
+/* Glassmorphism panel behind the hero heading + lead text, so the copy
+   stays readable over the dotted/mesh background instead of colliding
+   with it. */
+
+.hero-copy {
+  display: inline-block;
+  padding: var(--space-lg) var(--space-xl);
+  margin-bottom: var(--space-md);
+  border-radius: 24px;
+  background: var(--hero-glass-bg);
+  border: 1px solid var(--hero-glass-border);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 16px 40px -16px var(--hero-glass-shadow);
+}
+
+.hero-copy .lead {
+  margin-bottom: 0;
+}
+
+@media (max-width: 640px) {
+  .hero-copy {
+    padding: var(--space-md) var(--space-md);
+    border-radius: 18px;
+  }
 }
 
 .badge {
@@ -406,14 +460,14 @@ p {
   height: 8px;
   border-radius: 50%;
   background: var(--color-accent);
-  box-shadow: 0 0 0 0 rgba(124, 108, 255, 0.6);
+  box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-accent) 60%, transparent);
   animation: pulse 2s infinite;
 }
 
 @keyframes pulse {
-  0%   { box-shadow: 0 0 0 0 rgba(124, 108, 255, 0.5); }
-  70%  { box-shadow: 0 0 0 8px rgba(124, 108, 255, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(124, 108, 255, 0); }
+  0%   { box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-accent) 50%, transparent); }
+  70%  { box-shadow: 0 0 0 8px color-mix(in srgb, var(--color-accent) 0%, transparent); }
+  100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--color-accent) 0%, transparent); }
 }
 
 .hero-actions {
@@ -430,8 +484,8 @@ p {
   z-index: 1;
   pointer-events: none;
   background:
-    radial-gradient(circle at 20% 30%, rgba(124, 108, 255, 0.18), transparent 55%),
-    radial-gradient(circle at 80% 70%, rgba(124, 108, 255, 0.12), transparent 50%);
+    radial-gradient(circle at 20% 30%, color-mix(in srgb, var(--color-accent) 18%, transparent), transparent 55%),
+    radial-gradient(circle at 80% 70%, color-mix(in srgb, var(--color-accent) 12%, transparent), transparent 50%);
 }
 
 .hero-bg--dots {
@@ -591,45 +645,70 @@ body.is-mouse-active * {
 }
 
 
+/* Hero scroll cue — a circular badge with a rotating "SCROLL DOWN" ring
+   (same rotating-textPath technique as .nav-badge) around a down-arrow
+   core, echoing the reference site's circular scroll button. Colors run
+   off var(--color-accent)/var(--color-bg) so it auto-adapts per theme. */
+
 .scroll-cue {
   position: absolute;
   left: 50%;
   bottom: var(--space-lg);
   transform: translateX(-50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.75rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--color-muted);
+  width: 76px;
+  height: 76px;
+  display: grid;
+  place-items: center;
   z-index: 2;
+  transition: transform 0.3s ease;
 }
 
-.scroll-cue span {
-  width: 1px;
-  height: 32px;
-  background: var(--color-border);
-  position: relative;
-  overflow: hidden;
+.scroll-cue:hover {
+  transform: translateX(-50%) translateY(4px);
 }
 
-.scroll-cue span::after {
-  content: '';
+.scroll-cue-ring {
   position: absolute;
-  top: -100%;
-  left: 0;
+  inset: 0;
+  color: var(--hero-muted);
+  animation: badge-spin 14s linear infinite;
+}
+
+.scroll-cue-ring svg {
   width: 100%;
   height: 100%;
-  background: var(--color-accent);
-  animation: scroll-line 1.8s ease-in-out infinite;
+  overflow: visible;
 }
 
-@keyframes scroll-line {
-  0%   { top: -100%; }
-  60%  { top: 100%; }
-  100% { top: 100%; }
+.scroll-cue-ring text {
+  fill: currentColor;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.scroll-cue:hover .scroll-cue-ring {
+  animation-duration: 5s;
+}
+
+.scroll-cue-core {
+  position: relative;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--color-accent);
+  color: #ffffff;
+  box-shadow: 0 12px 28px -12px color-mix(in srgb, var(--color-accent) 55%, transparent);
+}
+
+.scroll-cue-core svg {
+  animation: scroll-arrow-bob 1.8s ease-in-out infinite;
+}
+
+@keyframes scroll-arrow-bob {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(3px); }
 }
 
 /* Buttons — premium sweep-fill hover */
@@ -716,13 +795,13 @@ body.is-mouse-active * {
    overflow). Shape colors adapt to the active theme. */
 
 .hello-wrap {
-  --hello-triangle: #ff9d3b; /* orange in dark theme */
+  --hello-triangle: #f1663d; /* coral, pops against the dark-green theme */
   position: relative;
   display: inline-block;
 }
 
 [data-theme="light"] .hello-wrap {
-  --hello-triangle: #2f8fff; /* blue in light theme */
+  --hello-triangle: #3e7bd6; /* blue, pops against the cream theme */
 }
 
 .hello-deco {
@@ -875,37 +954,84 @@ body.is-mouse-active * {
   color: var(--color-accent);
 }
 
+/* Color-blocked service cards — each service gets its own bold flat brand
+   color rather than sharing one neutral surface, so the grid reads as a
+   set of distinct, punchy tiles instead of a uniform list. */
+
 .services-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 1px;
-  background: var(--color-border);
-  border: 1px solid var(--color-border);
-  border-radius: 16px;
-  overflow: hidden;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-sm);
   margin-top: var(--space-md);
 }
 
 .service-card {
-  background: var(--color-bg-alt);
   padding: var(--space-lg) var(--space-md);
-  transition: background 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  min-height: 260px;
+  border-radius: 28px;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
 }
 
 .service-card:hover {
-  background: var(--color-bg-hover);
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px -22px rgba(0, 0, 0, 0.35);
+}
+
+.service-card h3 {
+  margin-top: auto;
+  font-size: 1.5rem;
+}
+
+.service-card p {
+  font-size: 1rem;
+  max-width: 30ch;
+  opacity: 0.85;
 }
 
 .service-card-top {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: var(--space-md);
 }
 
 .service-icon {
   display: flex;
-  color: var(--color-text);
+  color: currentColor;
+  transform: scale(1.3);
+  transform-origin: left center;
+}
+
+.service-card--blue {
+  background: var(--card-blue-bg);
+  color: var(--card-blue-ink);
+}
+
+.service-card--coral {
+  background: var(--card-coral-bg);
+  color: var(--card-coral-ink);
+}
+
+.service-card--pink {
+  background: var(--card-pink-bg);
+  color: var(--card-pink-ink);
+}
+
+.service-card--plum {
+  background: var(--card-plum-bg);
+  color: var(--card-plum-ink);
+}
+
+.service-card h3,
+.service-card p {
+  color: inherit;
+}
+
+@media (max-width: 700px) {
+  .services-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .service-dots {
@@ -918,6 +1044,11 @@ body.is-mouse-active * {
   height: 6px;
   border-radius: 50%;
   background: var(--color-accent);
+}
+
+.service-card .service-dots i {
+  background: currentColor;
+  opacity: 0.55;
 }
 
 /* Benefits */
@@ -972,13 +1103,39 @@ body.is-mouse-active * {
   font-size: 1.05rem;
 }
 
-/* Work grid */
+/* Work grid — a staggered two-column layout (right column dropped down),
+   large bold thumbnails, echoing the reference site's cases grid rather
+   than a uniform aligned grid of small cards. Each column is its own flex
+   stack (not grid rows), so the two columns' heights stay independent —
+   using grid rows directly would inflate a whole row to match whichever
+   card the offset margin pushed down, leaving dead space beside it. */
 
 .work-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: var(--space-lg);
+  grid-template-columns: repeat(2, 1fr);
+  align-items: start;
+  gap: var(--space-lg) var(--space-md);
   margin-top: var(--space-md);
+}
+
+.work-col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.work-col--offset {
+  margin-top: 4.5rem;
+}
+
+@media (max-width: 860px) {
+  .work-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .work-col--offset {
+    margin-top: 0;
+  }
 }
 
 .work-card {
@@ -990,16 +1147,31 @@ body.is-mouse-active * {
 }
 
 .work-card-media {
-  aspect-ratio: 4 / 3;
-  border-radius: 12px;
-  margin-bottom: var(--space-sm);
-  background: linear-gradient(135deg, rgba(124, 108, 255, 0.25), rgba(255, 255, 255, 0.03));
+  position: relative;
+  aspect-ratio: 4 / 5;
+  border-radius: 32px;
+  margin-bottom: 1.75rem;
+  overflow: hidden;
+  background: linear-gradient(135deg, color-mix(in srgb, var(--color-accent) 25%, transparent), color-mix(in srgb, var(--color-text) 4%, transparent));
   border: 1px solid var(--color-border);
   transition: box-shadow 0.4s ease;
 }
 
+.work-card-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.work-card:hover .work-card-media img {
+  transform: scale(1.05);
+}
+
 .work-card:hover .work-card-media {
-  box-shadow: 0 20px 40px -20px rgba(124, 108, 255, 0.45);
+  box-shadow: 0 20px 40px -20px color-mix(in srgb, var(--color-accent) 45%, transparent);
 }
 
 .work-card {
@@ -1024,7 +1196,264 @@ body.is-mouse-active * {
   transform: translateX(0);
 }
 
-/* Testimonials */
+/* "Coming soon" cards — real thumbnail, but not yet clickable through to a
+   case study. Slightly dimmed with an always-visible tag. */
+.work-card--soon {
+  cursor: default;
+}
+
+.work-card--soon .work-card-media {
+  opacity: 0.8;
+}
+
+.work-card-tag {
+  display: inline-block;
+  margin-top: 0.5rem;
+  padding: 0.25rem 0.6rem;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+/* Category pills under each title — small icon + label chips, matching the
+   reference's tag row under each case title. */
+.work-card-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.6rem;
+}
+
+.work-card-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.8rem 0.4rem 0.6rem;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.work-card-pill svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  color: var(--color-accent);
+}
+
+/* Cursor-follow "view case" badge — tracks the pointer inside the
+   thumbnail on hover (reference site's "SHOW CASE" button). Position is
+   driven entirely by GSAP (script.js); this CSS only handles the resting
+   hidden state and the ring/core look. */
+.work-card-follow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 84px;
+  height: 84px;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  opacity: 0;
+  z-index: 3;
+}
+
+.work-card-follow-ring {
+  position: absolute;
+  inset: 0;
+  color: #ffffff;
+  animation: badge-spin 9s linear infinite;
+}
+
+.work-card-follow-ring svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.work-card-follow-ring text {
+  fill: currentColor;
+  font-weight: 700;
+  text-transform: uppercase;
+  paint-order: stroke;
+  stroke: rgba(0, 0, 0, 0.35);
+  stroke-width: 3px;
+  stroke-linejoin: round;
+}
+
+.work-card-follow-core {
+  position: relative;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--color-accent);
+  color: #ffffff;
+  box-shadow: 0 12px 26px -10px rgba(0, 0, 0, 0.45);
+}
+
+/* Composed logo lockup thumbnail — the client's icon paired with a wordmark
+   on a designed brand background. Used when the logo is icon-only and needs
+   the studio name alongside it. */
+.logo-lockup {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  overflow: hidden;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.work-card:hover .logo-lockup {
+  transform: scale(1.03);
+}
+
+.logo-lockup-icon {
+  position: relative;
+  flex-shrink: 0;
+  width: 72px;
+  height: 72px;
+  border-radius: 18px;
+  box-shadow: 0 10px 26px -10px rgba(0, 0, 0, 0.7);
+}
+
+.logo-lockup-icon img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  border-radius: 18px;
+}
+
+.logo-lockup-text {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+.logo-lockup-name {
+  font-size: clamp(1.35rem, 5vw, 1.95rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: #f4f6fb;
+}
+
+.logo-lockup-sub {
+  margin-top: 0.4rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+}
+
+/* NorthScale Studio — near-black with a blue growth-glow rising from the
+   lower-left, echoing the ascending bars in the logo. */
+.logo-lockup--northscale {
+  background:
+    radial-gradient(circle at 28% 82%, rgba(74, 124, 255, 0.24), transparent 55%),
+    linear-gradient(160deg, #12151d, #080a0f);
+}
+
+.logo-lockup--northscale::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+  background-size: 38px 100%;
+  -webkit-mask-image: linear-gradient(180deg, transparent, #000);
+  mask-image: linear-gradient(180deg, transparent, #000);
+}
+
+.logo-lockup--northscale .logo-lockup-sub {
+  color: #4a7cff;
+}
+
+/* Logo showcase thumbnail — a full wordmark logo centered on a designed brand
+   background with a tagline. Used when the logo already carries the name. */
+.logo-showcase {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.85rem;
+  padding: 0 8%;
+  overflow: hidden;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.work-card:hover .logo-showcase {
+  transform: scale(1.03);
+}
+
+.logo-showcase img {
+  position: relative;
+  width: 100%;
+  max-width: 260px;
+  object-fit: contain;
+}
+
+/* Peermetals — black with a warm gold glow behind the metal bars, for a
+   premium precious-metals feel. */
+.logo-showcase--peermetals {
+  background:
+    radial-gradient(circle at 66% 44%, rgba(240, 168, 48, 0.24), transparent 55%),
+    linear-gradient(160deg, #14110b, #050505);
+}
+
+/* Testimonials — a fixed dark-green band regardless of the active theme
+   (Studio Modular's signature move), with an arch bump top and bottom that
+   breaks the section out of the usual rectangular rhythm. */
+
+.testimonials {
+  position: relative;
+  background: #16302a;
+  border-bottom: none;
+  padding: 6.5rem 0 7.5rem;
+  margin: var(--space-lg) 0;
+  overflow: visible;
+}
+
+.testimonials::before,
+.testimonials::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  width: min(640px, 82%);
+  height: 90px;
+  background: inherit;
+  transform: translateX(-50%);
+}
+
+.testimonials::before {
+  top: -60px;
+  border-radius: 999px 999px 0 0;
+}
+
+.testimonials::after {
+  bottom: -60px;
+  border-radius: 0 0 999px 999px;
+}
+
+.testimonials .eyebrow {
+  color: #9cc4ff;
+}
+
+.testimonials h2 {
+  color: #fbf3e7;
+}
 
 .testimonial-grid {
   display: grid;
@@ -1035,13 +1464,13 @@ body.is-mouse-active * {
 
 .testimonial-card {
   padding: var(--space-md);
-  border: 1px solid var(--color-border);
+  border: 1px solid rgba(251, 243, 231, 0.14);
   border-radius: 16px;
-  background: var(--color-bg-alt);
+  background: rgba(251, 243, 231, 0.06);
 }
 
 .testimonial-card p {
-  color: var(--color-text);
+  color: #fbf3e7;
   font-size: 1.05rem;
   margin-bottom: var(--space-sm);
 }
@@ -1049,7 +1478,7 @@ body.is-mouse-active * {
 .testimonial-card cite {
   font-style: normal;
   font-size: 0.85rem;
-  color: var(--color-muted);
+  color: #a9c2b5;
 }
 
 /* FAQ */
@@ -1136,7 +1565,7 @@ body.is-mouse-active * {
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  animation: chromatic-flow 8s linear infinite;
+  animation: chromatic-flow 8s linear infinite reverse;
 }
 
 @keyframes chromatic-flow {
@@ -1375,8 +1804,8 @@ html.is-loading body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(200deg, var(--color-accent), #ff9d3b);
-  box-shadow: 0 30px 70px -30px rgba(124, 108, 255, 0.55);
+  background: linear-gradient(200deg, var(--color-accent), var(--card-coral-bg));
+  box-shadow: 0 30px 70px -30px color-mix(in srgb, var(--color-accent) 55%, transparent);
 }
 
 .about-card-initial {
@@ -1506,9 +1935,9 @@ html.is-loading body {
 
 .case-media {
   aspect-ratio: 4 / 3;
-  border-radius: 16px;
+  border-radius: 22px;
   border: 1px solid var(--color-border);
-  background: linear-gradient(135deg, rgba(124, 108, 255, 0.25), rgba(255, 255, 255, 0.03));
+  background: linear-gradient(135deg, color-mix(in srgb, var(--color-accent) 25%, transparent), color-mix(in srgb, var(--color-text) 4%, transparent));
 }
 
 .case-gallery {
@@ -1556,6 +1985,53 @@ html.is-loading body {
 
 .case-next:hover .case-next-arrow {
   transform: translateX(10px);
+}
+
+/* Carousel strip — a horizontally scrollable row of portrait slides, so a
+   case study can show a real Instagram carousel the way it's actually swiped.
+   Slides snap into place and scale up on hover. */
+.carousel-strip {
+  display: flex;
+  gap: var(--space-sm);
+  margin-top: var(--space-md);
+  padding-bottom: var(--space-sm);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border) transparent;
+}
+
+.carousel-strip::-webkit-scrollbar {
+  height: 8px;
+}
+
+.carousel-strip::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 999px;
+}
+
+.carousel-strip img {
+  flex: 0 0 auto;
+  width: min(300px, 72vw);
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border-radius: 16px;
+  border: 1px solid var(--color-border);
+  scroll-snap-align: start;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+}
+
+.carousel-strip img:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 24px 44px -22px color-mix(in srgb, var(--color-accent) 50%, transparent);
+}
+
+.case-swipe-hint {
+  margin-top: var(--space-sm);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--color-muted);
 }
 
 @media (max-width: 760px) {

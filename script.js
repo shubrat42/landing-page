@@ -40,18 +40,26 @@ if (workCards.length) {
   });
 }
 
-// Parallax: hero background layers move at different speeds than the
-// foreground content as the page scrolls, using each layer's data-parallax
-// value as its relative speed.
+// Parallax: elements marked data-parallax drift at their own speed as the
+// page scrolls, using the attribute value as relative speed (negative
+// values drift the opposite direction). Inside the hero, the drift is
+// scrubbed to the hero filling the viewport (matches the existing
+// background-layer effect); everywhere else it's scrubbed to that
+// element's own section passing through the viewport, so photography and
+// cards elsewhere on the page drift the same way the reference site's
+// imagery does. Theme-independent — runs identically in light and dark.
 gsap.utils.toArray('[data-parallax]').forEach((el) => {
   const speed = parseFloat(el.dataset.parallax);
+  const heroParent = el.closest('.hero');
+  const trigger = heroParent || el.closest('.section') || el.parentElement;
+
   gsap.to(el, {
     yPercent: speed * 40,
     ease: 'none',
     scrollTrigger: {
-      trigger: el.closest('.hero'),
-      start: 'top top',
-      end: 'bottom top',
+      trigger,
+      start: heroParent ? 'top top' : 'top bottom',
+      end: heroParent ? 'bottom top' : 'bottom top',
       scrub: true,
     },
   });
@@ -80,6 +88,37 @@ if (window.matchMedia('(pointer: fine)').matches) {
       el.style.setProperty('--mx', `${nearX - rect.left}px`);
       el.style.setProperty('--my', `${nearY - rect.top}px`);
       el.style.setProperty('--glow', 1 - dist / proximity);
+    });
+  });
+}
+
+// Work-card cursor-follow badge: a small circular "VIEW CASE" button that
+// tracks the pointer inside each case thumbnail on hover, mirroring the
+// reference site's cursor-follow case button. Desktop pointers only.
+if (window.matchMedia('(pointer: fine)').matches) {
+  document.querySelectorAll('.work-card-media').forEach((media) => {
+    const follow = media.querySelector('.work-card-follow');
+    if (!follow) return;
+
+    gsap.set(follow, { xPercent: -50, yPercent: -50, scale: 0.6 });
+
+    const moveX = gsap.quickTo(follow, 'x', { duration: 0.45, ease: 'power3' });
+    const moveY = gsap.quickTo(follow, 'y', { duration: 0.45, ease: 'power3' });
+
+    media.addEventListener('mousemove', (e) => {
+      const rect = media.getBoundingClientRect();
+      moveX(e.clientX - rect.left);
+      moveY(e.clientY - rect.top);
+    });
+
+    media.addEventListener('mouseenter', (e) => {
+      const rect = media.getBoundingClientRect();
+      gsap.set(follow, { x: e.clientX - rect.left, y: e.clientY - rect.top });
+      gsap.to(follow, { opacity: 1, scale: 1, duration: 0.35, ease: 'back.out(1.7)' });
+    });
+
+    media.addEventListener('mouseleave', () => {
+      gsap.to(follow, { opacity: 0, scale: 0.6, duration: 0.25, ease: 'power2.in' });
     });
   });
 }
@@ -264,7 +303,7 @@ const themeToggle = document.getElementById('themeToggle');
 const themeWipe = document.getElementById('themeWipe');
 
 // Background colour per theme — kept in sync with --color-bg in style.css.
-const THEME_BG = { dark: '#0a0a0a', light: '#f6f6f8' };
+const THEME_BG = { dark: '#10231c', light: '#fff7f0' };
 let themeAnimating = false;
 
 if (themeToggle && themeWipe) {
