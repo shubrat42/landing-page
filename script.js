@@ -366,3 +366,51 @@ document.querySelectorAll('.faq-item').forEach((item) => {
     }
   });
 });
+
+
+// Background music toggle: floating button at the far-left of the header,
+// mirroring the theme toggle. Preference persists across page navigation
+// via localStorage, but each new page load needs a fresh play() attempt
+// since browsers won't resume audio without a user gesture on that page.
+//
+// The equalizer bars are animated entirely in CSS, keyed off the
+// .is-playing class this sets — see the @keyframes in style.css. Two
+// JS-driven approaches were tried first and both looked frozen: a real
+// Web Audio analyser (calm background music barely moves the sampled
+// frequency bins) and a per-frame generated wave (the inline heights it
+// wrote every 16ms fought the CSS height transition, damping the motion
+// down to a jitter). CSS owns the animation now, so it can't stall.
+const musicToggle = document.getElementById('musicToggle');
+const bgMusic = document.getElementById('bgMusic');
+
+if (musicToggle && bgMusic) {
+  const setMusicState = (isPlaying) => {
+    musicToggle.classList.toggle('is-playing', isPlaying);
+    musicToggle.setAttribute('aria-pressed', String(isPlaying));
+    musicToggle.setAttribute('aria-label', isPlaying ? 'Pause background music' : 'Play background music');
+  };
+
+  musicToggle.addEventListener('click', () => {
+    if (bgMusic.paused) {
+      bgMusic.play()
+        .then(() => {
+          setMusicState(true);
+          localStorage.setItem('music', 'playing');
+        })
+        .catch(() => setMusicState(false));
+    } else {
+      bgMusic.pause();
+      setMusicState(false);
+      localStorage.setItem('music', 'paused');
+    }
+  });
+
+  bgMusic.addEventListener('error', () => setMusicState(false));
+
+  if (localStorage.getItem('music') === 'playing') {
+    bgMusic.play()
+      .then(() => setMusicState(true))
+      .catch(() => setMusicState(false));
+  }
+}
+
