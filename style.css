@@ -495,6 +495,12 @@ p {
   background-color: transparent;
 }
 
+/* Keep the light-theme hero background stationary, overriding the
+   parallax transform applied by GSAP without changing dark mode. */
+[data-theme="light"] .hero-bg {
+  transform: none !important;
+}
+
 /* Mouse-reactive mesh + spotlight */
 
 .hero-mesh {
