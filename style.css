@@ -2045,3 +2045,98 @@ html.is-loading body {
     grid-template-columns: 1fr;
   }
 }
+
+
+/* Music toggle mirrors the theme toggle: same glass pill, floating at the
+   far-left of the header band, adapting to the site's light/dark theme.
+   Bars sit flat until playback starts, then bounce like an equalizer. */
+.music-toggle {
+  position: absolute;
+  left: var(--space-md);
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border-radius: 50%;
+  border: 1px solid var(--pill-border);
+  background: var(--pill-bg);
+  backdrop-filter: blur(10px);
+  color: var(--color-text);
+  cursor: pointer;
+  flex-shrink: 0;
+  box-shadow: 0 12px 34px -14px rgba(0, 0, 0, 0.55);
+  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.music-toggle:hover {
+  transform: translateY(-50%) scale(1.08);
+}
+
+.music-bars {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  height: 18px;
+}
+
+.music-bars span {
+  display: block;
+  width: 2px;
+  height: 6px;
+  border-radius: 1px;
+  background: currentColor;
+  transition: height 0.2s ease-out;
+}
+
+/* While playing, each bar rides the same keyframe but at its own speed and
+   phase, so the five never line up into one blinking block — that offset is
+   what reads as a rolling equalizer wave. The delays are negative so every
+   bar starts partway through its cycle instead of all springing up together
+   on the first frame. transform-origin isn't needed since height animates
+   from a centred flex row, growing each bar evenly up and down. */
+@keyframes music-wave {
+  0%,
+  100% {
+    height: 3px;
+  }
+  50% {
+    height: 18px;
+  }
+}
+
+.music-toggle.is-playing .music-bars span {
+  transition: none;
+  animation: music-wave 0.9s ease-in-out infinite;
+}
+
+.music-toggle.is-playing .music-bars span:nth-child(1) {
+  animation-duration: 0.72s;
+  animation-delay: -0.21s;
+}
+
+.music-toggle.is-playing .music-bars span:nth-child(2) {
+  animation-duration: 1.15s;
+  animation-delay: -0.56s;
+}
+
+.music-toggle.is-playing .music-bars span:nth-child(3) {
+  animation-duration: 0.86s;
+  animation-delay: -0.09s;
+}
+
+.music-toggle.is-playing .music-bars span:nth-child(4) {
+  animation-duration: 1.32s;
+  animation-delay: -0.74s;
+}
+
+.music-toggle.is-playing .music-bars span:nth-child(5) {
+  animation-duration: 0.95s;
+  animation-delay: -0.38s;
+}
+
